@@ -75,7 +75,7 @@ const loginUser =async(req,res) =>{
             id: user._id
         },
         process.env.JWT_SECRET,
-        { expireIn:"7d" }
+        { expiresIn:"7d" }
     );
     res.status(200).json({
        success: true,
