@@ -1,4 +1,4 @@
-const user = require("../models/User");
+
 
 const bcrypt = require("bcryptjs");
 
@@ -41,58 +41,9 @@ const registerUser = async (req, res) => {
         });
     }
 };
-const loginuser = async (req, res) => {
-    try {
-        const { password, email } = req.body;
-        if (!email || !password) {
 
-            return res.status(400).json({
-                success: false,
-                messgae: "email and password are required"
-            });
-        }
-        const user = await User.findOne({ email });
-        if (user) {
-            return res.status(400).json({
-                success: false,
-                message: "invalid email id/credential"
-            });
-        }
-        const isMatch = await bcrypt.compare(password, user.password)
-        if (!isMatch) {
-            return res.status(400).json({
-                success: false,
-                message: "invalid password/credential"
-            });
-        }
-        const token = jwt.sign(
-            { id: user._id },
-            process.env.JWT_SECRET,
-            { expireIn: "7d" }
-
-        );
-        res.status(200).json({
-            success: true,
-            message: "login successful",
-            token,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email
-            }
-        });
-
-    }
-    catch (e) {
-        res.status(500).json({
-            success: false,
-            message: "unable to login",
-            error: e.message
-        });
-
-    }
-};
 const loginUser =async(req,res) =>{
+
     try{
       const { email,password} = req.body;
       if(!email || !password)
@@ -101,7 +52,9 @@ const loginUser =async(req,res) =>{
             success:false,
             message:"Email & password required"
         });
-        const user =await User.findOne({email});
+        
+      }
+      const user =await User.findOne({email});
         if(!user)
         {
             return res.status(400).json({
@@ -109,7 +62,6 @@ const loginUser =async(req,res) =>{
                 message: "Invalid Email/ Credentials"
             });
         }
-      }
       const isMatch= await bcrypt.compare(password, user.password);
       if(!isMatch)
       {
