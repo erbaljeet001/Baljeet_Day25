@@ -15,7 +15,9 @@ app.get("/",(req,res) =>{
 
 const authRoutes= require("./routes/authRoutes");
 app.use("/api/auth",authRoutes);
+
 const PORT =process.env.PORT || 5001;
+
 app.listen( PORT,()=> {
     console.log("Started started at http://localhost: "+PORT);
     console.log('Server started at http://localhost: ${PORT} ');
